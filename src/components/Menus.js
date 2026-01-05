@@ -1,23 +1,38 @@
 import React from "react";
+import "./Menus.css";
 
 export default function Menus() {
   const menuItems = [
-    "Lunch & Dinner Menu",
-    "New Year's Eve Menu",
-    "Chef's Tasting Menu",
-    "Beverage Menu",
+    {
+      title: "Lunch & Dinner Menu",
+      image: "/images/lunch-dinner.jpg",
+    },
+    {
+      title: "New Year's Eve Menu",
+      image: "/images/new-year.jpg",
+    },
+    {
+      title: "Chef's Tasting Menu",
+      image: "/images/chef-tasting.jpg",
+    },
+    {
+      title: "Beverage Menu",
+      image: "/images/beverage.jpg",
+    },
   ];
 
   return (
     <section className="menus">
-      <h2>Menus</h2>
-      <ul>
+      <h2 className="menus-title">Menus</h2>
+
+      <div className="menu-cards">
         {menuItems.map((item, index) => (
-          <li key={index}>
-            <a href="#">{item}</a>
-          </li>
+          <div className="menu-card" key={index}>
+            <img src={item.image} alt={item.title} />
+            <h3>{item.title}</h3>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }
