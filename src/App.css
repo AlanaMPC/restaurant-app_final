@@ -10,8 +10,8 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 15px 30px;
-  background: #f8ebd3;
-  border-bottom: 1px solid #ddd;
+  background: #EFEBE4;
+  border-bottom: 1px solid #f8ebd3;
 }
 
 .nav-links li {
@@ -20,7 +20,7 @@ body {
 }
 
 .hero {
-  background: #f9f9f9;
+  background:#f8ebd3;
   text-align: center;
 }
 
