@@ -11,7 +11,7 @@ body {
   justify-content: space-between;
   padding: 15px 30px;
   background: #EFEBE4;
-  border-bottom: 1px solid #f8ebd3;
+  border-bottom: 1px solid #EFEBE4;
 }
 
 .nav-links li {
@@ -20,7 +20,7 @@ body {
 }
 
 .hero {
-  background:#f8ebd3;
+  background:#EFEBE4;
   text-align: center;
 }
 
@@ -30,7 +30,7 @@ section {
 
 footer {
   background: #333;
-  color: white;
+  color: #EFEBE4;
   text-align: center;
   padding: 20px;
 }
