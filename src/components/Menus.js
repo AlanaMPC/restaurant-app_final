@@ -1,11 +1,11 @@
 import React from "react";
 import "./Menus.css";
-
+import vegdel from "./vegdel.png";
 export default function Menus() {
   const menuItems = [
     {
       title: "Lunch & Dinner Menu",
-      image: "/Users/anupama/Desktop/Anu/Project/food/restaurant-app_final/src/components/vegdel.png",
+      image: vegdel,
     },
     {
       title: "New Year's Eve Menu",
