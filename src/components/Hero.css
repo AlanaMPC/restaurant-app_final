@@ -2,7 +2,8 @@
   height: 80vh;
   background-image: url("hero.jpeg");
   background-size: cover;
-  background-position: center;
+  background-position: fixed
+;
   display: flex;
   align-items: center;
   justify-content: center;
