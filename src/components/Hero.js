@@ -5,8 +5,7 @@ export default function Hero() {
     <section className="hero">
       <h1>Zhaa Home Foods, Coimbatore</h1>
       <p>
-        Inventive Indian cuisine complemented with global ingredients and
-        techniques.
+        Inventive Indian cuisine compl
       </p>
     </section>
   );
