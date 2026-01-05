@@ -1,6 +1,7 @@
 import React from "react";
 import "./Menus.css";
-import soup from "./soup.webp";
+import soup from "./soupp.jpg";
+
 export default function Menus() {
   const menuItems = [
     {
@@ -28,8 +29,10 @@ export default function Menus() {
       <div className="menu-cards">
         {menuItems.map((item, index) => (
           <div className="menu-card" key={index}>
-            <img src={item.image} alt={item.title} />
-            <h3>{item.title}</h3>
+            <div className="menu-image-wrapper">
+              <img src={item.image} alt={item.title} />
+            </div>
+            <h3>{item.title.toLowerCase()}</h3>
           </div>
         ))}
       </div>
