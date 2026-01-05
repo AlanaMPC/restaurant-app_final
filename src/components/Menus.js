@@ -1,25 +1,26 @@
 import React from "react";
 import "./Menus.css";
-import soup from "./soupp.jpg";
-
+import soup from "./image.jpeg";
+import clf from "./clf.jpeg";
 export default function Menus() {
   const menuItems = [
     {
-      title: "Lunch & Dinner Menu",
+      title: "Vegetarian Delights ",
       image: soup,
     },
+    
     {
-      title: "New Year's Eve Menu",
-      image: "/images/new-year.jpg",
-    },
-    {
-      title: "Chef's Tasting Menu",
+      title: "South Indian Specials",
       image: "/images/chef-tasting.jpg",
     },
     {
       title: "Beverage Menu",
       image: "/images/beverage.jpg",
     },
+    {
+      title: "Non-Vegetarian Treats",
+      image: clf,
+    }
   ];
 
   return (
@@ -29,10 +30,8 @@ export default function Menus() {
       <div className="menu-cards">
         {menuItems.map((item, index) => (
           <div className="menu-card" key={index}>
-            <div className="menu-image-wrapper">
-              <img src={item.image} alt={item.title} />
-            </div>
-            <h3>{item.title.toLowerCase()}</h3>
+            <img src={item.image} alt={item.title} />
+            <h3>{item.title}</h3>
           </div>
         ))}
       </div>
