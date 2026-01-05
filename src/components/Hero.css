@@ -1,0 +1,16 @@
+.hero {
+  height: 80vh;
+  background-image: url("/Users/anupama/Desktop/Anu/Project/food/restaurant-app_final/public/hero.jpeg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  color: white;
+  text-align: center;
+}
