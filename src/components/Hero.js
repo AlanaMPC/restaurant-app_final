@@ -6,7 +6,7 @@ export default function Hero() {
       <h1>Indian Accent, New Delhi</h1>
       <p>
         Inventive Indian cuisine complemented with global ingredients and
-        techniques. Voted one of India’s top restaurants internationally. :contentReference[oaicite:1]{index=1}
+        techniques.
       </p>
     </section>
   );
