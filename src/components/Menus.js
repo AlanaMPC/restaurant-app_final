@@ -5,7 +5,7 @@ export default function Menus() {
   const menuItems = [
     {
       title: "Lunch & Dinner Menu",
-      image: "/images/lunch-dinner.jpg",
+      image: "/Users/anupama/Desktop/Anu/Project/food/restaurant-app_final/src/components/vegdel.png",
     },
     {
       title: "New Year's Eve Menu",
