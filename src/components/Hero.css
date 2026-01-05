@@ -1,6 +1,6 @@
 .hero {
   height: 80vh;
-  background-image: url("/Users/anupama/Desktop/Anu/Project/food/restaurant-app_final/public/hero.jpeg");
+  background-image: url("hero.jpeg");
   background-size: cover;
   background-position: center;
   display: flex;
