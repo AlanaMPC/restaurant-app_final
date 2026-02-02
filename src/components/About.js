@@ -2,11 +2,12 @@ import React from "react";
 
 export default function About() {
   return (
-    <section className="about">
-      <h2>About</h2>
+    <section className="about" id="about">
+      <h2>About Us</h2>
       <p>
-        Indian Accent showcases inventive Indian cuisine by complementing the
-        flavours and traditions of India with global ingredients and techniques.
+        Zhaa Home Foods brings you authentic home-style cooking with a modern twist. 
+        From South Indian classics to innovative fusion dishes, we serve freshly prepared, 
+        family-friendly meals that are kids-approved and loved by all.
       </p>
     </section>
   );

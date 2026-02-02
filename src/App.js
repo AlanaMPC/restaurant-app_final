@@ -1,27 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Menus from "./components/Menus";
-import About from "./components/About";
-import Chef from "./components/Chef";
-import PrivateDining from "./components/PrivateDining";
-import Gifting from "./components/Gifting";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 import Footer from "./components/Footer";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <Navbar />
-      <Hero />
-      <Menus />
-      <About />
-      <Chef />
-      <PrivateDining />
-      <Gifting />
-      <Footer />
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/signup" element={<Signup setIsAuthenticated={setIsAuthenticated} />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
