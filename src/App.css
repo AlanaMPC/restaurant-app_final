@@ -197,28 +197,130 @@ footer p:first-child {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
+  .navbar {
+    padding: 20px 40px;
+  }
+  
+  section {
+    padding: 70px 40px;
+  }
+  
+  .about, .chef, .private-dining, .gifting {
+    padding: 80px 40px;
+  }
+}
+
+@media (max-width: 992px) {
   .navbar {
     padding: 15px 30px;
-    flex-direction: column;
-    gap: 20px;
   }
   
   .nav-links {
     gap: 20px;
+  }
+  
+  .about h2, .chef h2, .private-dining h2, .gifting h2 {
+    font-size: 3rem;
+  }
+  
+  .about p, .chef p, .private-dining p, .gifting p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-links {
+    gap: 15px;
     flex-wrap: wrap;
     justify-content: center;
   }
   
+  .nav-links li {
+    font-size: 0.8rem;
+  }
+  
+  .user-menu {
+    gap: 15px;
+  }
+  
+  .logout-btn {
+    padding: 6px 15px;
+    font-size: 0.8rem;
+  }
+  
   section {
-    padding: 60px 30px;
+    padding: 50px 20px;
+  }
+  
+  .about, .chef, .private-dining, .gifting {
+    padding: 60px 20px;
   }
   
   .about h2, .chef h2, .private-dining h2, .gifting h2 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+  }
+  
+  .about p, .chef p, .private-dining p, .gifting p {
+    font-size: 1rem;
+    line-height: 1.7;
   }
   
   .logo {
     font-size: 1.5rem;
+  }
+  
+  footer {
+    padding: 40px 20px;
+  }
+  
+  footer p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 12px 15px;
+    gap: 12px;
+  }
+  
+  .logo {
+    font-size: 1.3rem;
+  }
+  
+  .nav-links {
+    gap: 10px;
+  }
+  
+  .nav-links li {
+    font-size: 0.75rem;
+  }
+  
+  .signup-link {
+    padding: 6px 12px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .about h2, .chef h2, .private-dining h2, .gifting h2 {
+    font-size: 1.8rem;
+  }
+  
+  .about p, .chef p, .private-dining p, .gifting p {
+    font-size: 0.95rem;
+  }
+  
+  section {
+    padding: 40px 15px;
+  }
+  
+  .about, .chef, .private-dining, .gifting {
+    padding: 50px 15px;
   }
 }
