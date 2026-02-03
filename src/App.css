@@ -29,8 +29,10 @@
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 40px;
+  gap: 30px;
   margin: 0;
+  align-items: center;
+  height: 100%;
 }
 
 .nav-links li {
@@ -42,6 +44,11 @@
   transition: color 0.3s ease;
   text-transform: uppercase;
   font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-links li:hover {
@@ -56,10 +63,13 @@
 .signup-link {
   background: linear-gradient(135deg, #d4a574 0%, #c89660 100%);
   color: white !important;
-  padding: 10px 24px !important;
+  padding: 8px 20px !important;
   border-radius: 6px;
   font-weight: 500 !important;
   transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 
 .signup-link:hover {
@@ -71,19 +81,22 @@
 .user-menu {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
+  padding: 0;
+}
+
+.user-name {
+  margin: 0;
 }
 
 .user-name {
   color: #d4a574;
   font-weight: 500;
-}
-
-.logout-btn {
-  background: transparent;
-  border: 2px solid #d4a574;
-  color: #d4a574;
-  padding: 8px 20px;
+  text-transform: none;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0
+  backgroun6px 16px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.85rem;
@@ -91,6 +104,7 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .logout-btn:hover {
