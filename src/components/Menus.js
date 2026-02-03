@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Menus.css";
 import soup from "./image.jpeg";
 import clf from "./clf.jpeg";
@@ -6,12 +7,13 @@ import dosa from "./dosa.jpg";
 import mojito from "./mojito.jpg";
 
 export default function Menus() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const navigate = useNavigate();
 
   const menuCategories = [
     {
       title: "Vegetarian Delights",
       image: soup,
+      link: "vegetarian",
       items: [
         "Tomato Soup",
         "French Fries",
@@ -24,8 +26,8 @@ export default function Menus() {
     {
       title: "Non-Vegetarian Treats",
       image: clf,
+      link: "non-vegetarian",
       items: [
-        "Sticken Pops",
         "Chicken Pops",
         "Chicken Loaded Fries",
         "Chicken Sandwich",
@@ -41,6 +43,7 @@ export default function Menus() {
     {
       title: "South Indian Specials",
       image: dosa,
+      link: "south-indian",
       items: [
         "Idly – Plain",
         "Idly – Sambar",
@@ -52,11 +55,11 @@ export default function Menus() {
     {
       title: "Refreshing Mojitos",
       image: mojito,
+      link: "mojitos",
       items: [
         "Strawberry Mojito",
         "Litchi Mojito",
-        "Lime Mojito",
-        "Monito (Special)"
+        "Lime Mojito"
       ]
     }
   ];
@@ -71,19 +74,10 @@ export default function Menus() {
           <div 
             className="menu-card" 
             key={index}
-            onClick={() => setSelectedCategory(selectedCategory === index ? null : index)}
+            onClick={() => navigate(`/menu/${category.link}`)}
           >
             <img src={category.image} alt={category.title} />
             <h3>{category.title}</h3>
-            {selectedCategory === index && (
-              <div className="menu-items">
-                <ul>
-                  {category.items.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
         ))}
       </div>

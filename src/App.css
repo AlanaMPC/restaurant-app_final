@@ -95,8 +95,14 @@
   text-transform: none;
   font-size: 0.9rem;
   margin: 0;
-  padding: 0
-  backgroun6px 16px;
+  padding: 0;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #d4a574 0%, #c89660 100%);
+  border: none;
+  color: white;
+  padding: 8px 20px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.85rem;
@@ -108,8 +114,8 @@
 }
 
 .logout-btn:hover {
-  background: #d4a574;
-  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
 }
 
 /* Section Styles */

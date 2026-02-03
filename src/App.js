@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import MenuCategory from "./components/MenuCategory";
 import Footer from "./components/Footer";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/signup" element={<Signup setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/menu/:category" element={<MenuCategory />} />
         </Routes>
         <Footer />
       </div>
