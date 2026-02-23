@@ -8,6 +8,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import MenuCategory from "./components/MenuCategory";
 import Footer from "./components/Footer";
+import Chatbot from "./components/Chatbot/Chatbot";
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,6 +32,7 @@ function App() {
           <Route path="/menu/:category" element={<MenuCategory />} />
         </Routes>
         <Footer />
+        <Chatbot />
       </div>
     </Router>
   );
