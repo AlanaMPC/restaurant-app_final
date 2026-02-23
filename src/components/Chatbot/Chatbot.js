@@ -13,63 +13,148 @@ const formatMessage = (text) => {
     .replace(/\*(?!\*)(.*?)\*/g, '<em>$1</em>')
     .replace(/_(?!_)(.*?)_/g, '<em>$1</em>')
     // Bullet points: * item or - item
-    .replace(/^[\*\-] (.+)$/gm, '<li>$1</li>')
+    .replace(/^[*-] (.+)$/gm, '<li>$1</li>')
     // Wrap consecutive <li> in <ul>
-    .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+    .replace(/((<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>')
     // Line breaks
     .replace(/\n/g, '<br/>');
 };
 
-// Menu data for context
-const menuContext = `
-You are a friendly, casual restaurant assistant for our restaurant. Here's our full menu:
+// Get time-based context
+const getTimeContext = () => {
+  const now = new Date();
+  const hour = now.getHours();
+  const day = now.toLocaleDateString('en-IN', { weekday: 'long' });
+  const dateStr = now.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+  const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
 
-**VEGETARIAN (₹80-180):**
-- Tomato Soup ₹150 - Hot and aromatic tomato soup
-- French Fries ₹100 - Crispy golden fried potatoes
-- Loaded French Fries ₹180 - French fries with toppings and sauces
-- Veg Sandwich ₹120 - Fresh vegetable sandwich with special sauce
-- Lotus Biscoff Sandwich ₹140 - Sweet biscoff spread sandwich (Kids' Favorite!)
-- Paneer Burger ₹180 - Crispy paneer patty burger
+  let mealTime = '';
+  let mealSuggestion = '';
 
-**NON-VEGETARIAN (₹100-240):**
-- Chicken Pops ₹220 - Crispy chicken fritters
-- Chicken Loaded Fries ₹240 - Loaded fries with chicken and toppings
-- Chicken Sandwich ₹200 - Tender chicken sandwich
-- Chicken Momos ₹180 - Steamed chicken momos with sauce
-- Plain Dosa ₹100 - Crispy plain dosa
-- Egg Dosa ₹130 - Dosa with egg filling
-- Egg Cheese Dosa ₹160 - Dosa with egg and cheese
-- Chicken Dosa ₹200 - Dosa with shredded chicken
-- Cheesy Chicken Dosa ₹230 - Chicken dosa with melted cheese
-- Mutton Keema Dosa ₹240 - Dosa with mutton keema filling
+  if (hour >= 6 && hour < 11) {
+    mealTime = 'breakfast';
+    mealSuggestion = 'Great time for our South Indian breakfast! Idly, Panniyaram, or Dosa are perfect morning picks.';
+  } else if (hour >= 11 && hour < 15) {
+    mealTime = 'lunch';
+    mealSuggestion = 'Lunch hour! Our dosas and burgers are great picks. Pair with a refreshing mojito!';
+  } else if (hour >= 15 && hour < 18) {
+    mealTime = 'snack time';
+    mealSuggestion = 'Perfect time for evening snacks! Try our French Fries, Chicken Pops, or Momos.';
+  } else if (hour >= 18 && hour < 22) {
+    mealTime = 'dinner';
+    mealSuggestion = 'Dinner time! Go all in — try our Mutton Keema Dosa or Cheesy Chicken Dosa paired with a Strawberry Mojito.';
+  } else {
+    mealTime = 'late night';
+    mealSuggestion = 'Late night cravings? Our sandwiches and fries are quick and satisfying!';
+  }
 
-**SOUTH INDIAN (₹80-120):**
-- Idly Plain ₹80 - Soft steamed rice cakes
-- Idly Sambar ₹100 - Idly with sambar curry
-- Idly Podi ₹100 - Idly with spicy podi powder
-- Panniyaram Cheese ₹120 - Soft panniyaram with cheese
-- Panniyaram Nei Podi ₹120 - Panniyaram with ghee and spices
+  return { hour, day, dateStr, timeStr, mealTime, mealSuggestion };
+};
 
-**MOJITOS (₹150-180):**
-- Strawberry Mojito ₹180 - Fresh strawberry mojito
-- Litchi Mojito ₹180 - Sweet litchi mojito
-- Lime Mojito ₹150 - Classic lime and mint mojito
+// Get the logged-in user's name
+const getUserName = () => {
+  try {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user?.email?.split('@')[0] || null;
+  } catch {
+    return null;
+  }
+};
 
-PERSONALITY GUIDELINES:
-- Be casual, warm, and friendly (use emojis occasionally 😊)
-- Keep responses concise but helpful
-- If asked about items not on menu, politely say we don't have it but suggest alternatives
-- For dietary questions, clearly distinguish veg vs non-veg
-- If asked about spicy food, recommend: Idly Podi, Chicken Pops, Mutton Keema Dosa
-- For kids, suggest: Lotus Biscoff Sandwich, French Fries, Plain Idly
-- Budget-friendly picks (under ₹120): French Fries, Veg Sandwich, Idly varieties, Plain Dosa
-`;
+// Build the smart system prompt
+const buildSystemPrompt = () => {
+  const time = getTimeContext();
+  const userName = getUserName();
+
+  return `You are "Zhaa Assist" 🍽️ — the smart, friendly, and witty AI assistant for our restaurant.
+
+CURRENT CONTEXT:
+- Current time: ${time.timeStr}
+- Current day: ${time.day}, ${time.dateStr}
+- Meal period: ${time.mealTime}
+- Suggestion for now: ${time.mealSuggestion}
+${userName ? `- Customer name: ${userName} (greet them by name when appropriate!)` : '- Customer is a guest (not logged in)'}
+
+FULL MENU:
+
+**🥬 VEGETARIAN (₹80-180):**
+- Tomato Soup ₹150 — Hot and aromatic. Perfect comfort food.
+- French Fries ₹100 — Crispy golden fried potatoes. A classic!
+- Loaded French Fries ₹180 — French fries loaded with toppings and sauces.
+- Veg Sandwich ₹120 — Fresh vegetable sandwich with our special sauce.
+- Lotus Biscoff Sandwich ₹140 — Sweet biscoff spread sandwich. Kids absolutely love this!
+- Paneer Burger ₹180 — Crispy paneer patty burger. Our bestselling veg item!
+
+**🍗 NON-VEGETARIAN (₹100-240):**
+- Chicken Pops ₹220 — Crispy chicken fritters. Spicy and crunchy!
+- Chicken Loaded Fries ₹240 — Loaded fries with chicken and toppings. A meal in itself.
+- Chicken Sandwich ₹200 — Tender chicken sandwich.
+- Chicken Momos ₹180 — Steamed chicken momos with spicy sauce.
+- Plain Dosa ₹100 — Crispy plain dosa. Simple and satisfying.
+- Egg Dosa ₹130 — Dosa with egg filling.
+- Egg Cheese Dosa ₹160 — Dosa with egg and melty cheese.
+- Chicken Dosa ₹200 — Dosa with shredded chicken.
+- Cheesy Chicken Dosa ₹230 — Chicken dosa loaded with melted cheese. A fan favorite!
+- Mutton Keema Dosa ₹240 — Dosa with mutton keema filling. Our premium pick!
+
+**🏛️ SOUTH INDIAN SPECIALS (₹80-120):**
+- Idly Plain ₹80 — Soft steamed rice cakes. Light and healthy.
+- Idly Sambar ₹100 — Idly with flavorful sambar curry.
+- Idly Podi ₹100 — Idly with spicy podi powder. For spice lovers!
+- Panniyaram Cheese ₹120 — Soft panniyaram balls with cheese.
+- Panniyaram Nei Podi ₹120 — Panniyaram with ghee and spices. Authentic taste!
+
+**🍹 REFRESHING MOJITOS (₹150-180):**
+- Strawberry Mojito ₹180 — Fresh strawberry mojito. Sweet and refreshing!
+- Litchi Mojito ₹180 — Sweet litchi mojito. Tropical vibes.
+- Lime Mojito ₹150 — Classic lime and mint mojito. Budget-friendly refreshment!
+
+PERSONALITY & BEHAVIOR:
+- Be casual, warm, friendly, and a little witty (like a cool waiter who knows their stuff)
+- Use emojis naturally but don't overdo it
+- ALWAYS be aware of the current time and proactively suggest meals based on the time of day
+- If someone asks "what should I eat?" or is confused, give a confident personalized recommendation based on the time
+- Know the menu inside out — compare dishes, explain what's popular, suggest combos
+- Suggest drink pairings with food naturally (e.g., "That'd go great with a Lime Mojito! 🍹")
+- For groups, suggest a variety: mix of veg + non-veg + drinks
+- If asked about items NOT on menu, say so politely but always pivot to what we DO have
+- Use food enthusiasm — "Oh, you HAVE to try the Cheesy Chicken Dosa, it's unreal! 🤤"
+- If someone says budget, help them find the best value combos
+- If asked about the restaurant (location, hours, reservations), say "I'm just the menu expert! But you can contact the restaurant directly for that info 😊"
+- Keep responses concise — no walls of text. Use bullet points for lists.
+
+SMART SUGGESTIONS:
+- Budget combo (under ₹250): Plain Dosa + Idly Sambar + Lime Mojito
+- Premium combo: Cheesy Chicken Dosa + Loaded Fries + Strawberry Mojito
+- Kids combo: Lotus Biscoff Sandwich + French Fries + Litchi Mojito
+- Spice lovers: Idly Podi + Chicken Pops + Mutton Keema Dosa
+- Quick bites: Chicken Momos + French Fries
+- Date night: Paneer Burger + Chicken Sandwich + 2 Mojitos
+
+IMPORTANT: Always respond in a way that makes the customer feel welcomed and excited about the food!`;
+};
+
+// Smart greeting based on time
+const getGreeting = () => {
+  const time = getTimeContext();
+  const userName = getUserName();
+  const nameGreet = userName ? ` ${userName}` : '';
+
+  const greetings = {
+    'breakfast': `Good morning${nameGreet}! ☀️ Ready for a delicious breakfast? Our South Indian specials are calling your name!`,
+    'lunch': `Hey${nameGreet}! 🍽️ Hungry for lunch? I've got some amazing picks for you. What's the vibe — light or filling?`,
+    'snack time': `Hey there${nameGreet}! 🍟 Snack o'clock, am I right? Our Fries and Momos are perfect right about now!`,
+    'dinner': `Good evening${nameGreet}! 🌙 Time for a proper dinner! Want me to suggest something special?`,
+    'late night': `Hey${nameGreet}, still up? 🌃 Late night cravings hit different! Let me hook you up with something good.`
+  };
+
+  return greetings[time.mealTime] || `Hey there${nameGreet}! 👋 What can I get for you today?`;
+};
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: "Hey there! 👋 I'm here to help you with our menu. Ask me anything - what are you in the mood for today?" }
+    { role: 'assistant', content: getGreeting() }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -113,15 +198,18 @@ export default function Chatbot() {
         parts: [{ text: msg.content }]
       }));
 
+      // Build fresh system prompt with current time
+      const systemPrompt = buildSystemPrompt();
+
       // Add system context as the first message
       const contents = [
         {
           role: 'user',
-          parts: [{ text: menuContext }]
+          parts: [{ text: systemPrompt }]
         },
         {
           role: 'model',
-          parts: [{ text: "Got it! I'm ready to help customers with our menu. I'll be casual, friendly, and use emojis occasionally! 😊" }]
+          parts: [{ text: "Got it! I'm Zhaa Assist, your smart restaurant assistant. I know the menu, the current time, and I'm ready to give great recommendations! Let's do this! 😊🍽️" }]
         },
         ...conversationHistory
       ];
@@ -136,7 +224,7 @@ export default function Chatbot() {
           body: JSON.stringify({
             contents: contents,
             generationConfig: {
-              temperature: 0.7,
+              temperature: 0.8,
               maxOutputTokens: 1024,
             }
           })
@@ -145,7 +233,7 @@ export default function Chatbot() {
 
       // Handle rate limit with retry
       if (response.status === 429 && retryCount < 3) {
-        const waitTime = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s
+        const waitTime = Math.pow(2, retryCount) * 1000;
         await new Promise(resolve => setTimeout(resolve, waitTime));
         return makeRequest(retryCount + 1);
       }
@@ -190,6 +278,14 @@ export default function Chatbot() {
     }
   };
 
+  // Quick suggestion chips
+  const quickSuggestions = [
+    "What's good right now?",
+    "Veg options",
+    "Under ₹150",
+    "Suggest a combo"
+  ];
+
   return (
     <div className="chatbot-container">
       {/* Chat Window */}
@@ -198,8 +294,8 @@ export default function Chatbot() {
           <div className="chatbot-header-info">
             <span className="chatbot-avatar">🍽️</span>
             <div>
-              <h3>Menu Assistant</h3>
-              <span className="chatbot-status">Online</span>
+              <h3>Zhaa Assist</h3>
+              <span className="chatbot-status">Online • Knows the menu</span>
             </div>
           </div>
           <button className="chatbot-close" onClick={() => setIsOpen(false)}>×</button>
@@ -230,11 +326,28 @@ export default function Chatbot() {
           <div ref={messagesEndRef} />
         </div>
 
+        {/* Quick Suggestions - show only when there are few messages */}
+        {messages.length <= 2 && !isLoading && (
+          <div className="chatbot-suggestions">
+            {quickSuggestions.map((text, idx) => (
+              <button
+                key={idx}
+                className="suggestion-chip"
+                onClick={() => {
+                  setInput(text);
+                }}
+              >
+                {text}
+              </button>
+            ))}
+          </div>
+        )}
+
         <div className="chatbot-input-area">
           <input
             ref={inputRef}
             type="text"
-            placeholder="Ask about our menu..."
+            placeholder="Ask me anything about our menu..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}

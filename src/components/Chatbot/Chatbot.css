@@ -282,6 +282,42 @@
   margin-top: 6px;
 }
 
+/* Quick Suggestion Chips */
+.chatbot-suggestions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  overflow-x: auto;
+  background: white;
+  border-top: 1px solid #f0e6db;
+  scrollbar-width: none;
+}
+
+.chatbot-suggestions::-webkit-scrollbar {
+  display: none;
+}
+
+.suggestion-chip {
+  white-space: nowrap;
+  padding: 8px 16px;
+  border: 2px solid #d4a574;
+  border-radius: 20px;
+  background: transparent;
+  color: #c89660;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.suggestion-chip:hover {
+  background: linear-gradient(135deg, #d4a574 0%, #c89660 100%);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(212, 165, 116, 0.3);
+}
+
 /* Typing Indicator */
 .message-content.typing {
   display: flex;
